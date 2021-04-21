@@ -141,10 +141,7 @@ contract XDVToken is ERC721Burnable, ERC721Pausable, ERC721URIStorage, Ownable {
     function withdrawBalance(address payable payee) public onlyOwner {
         uint256 balance = stablecoin.balanceOf(address(this));
 
-        require(
-            stablecoin.transfer(payee, balance),
-            "XDV: Transfer failed"
-        );
+        require(stablecoin.transfer(payee, balance), "XDV: Transfer failed");
 
         emit Withdrawn(payee, balance);
     }

@@ -6,20 +6,16 @@ pragma solidity ^0.8.0;
  */
 contract MinterCore {
     // Documents provider mappings
-    mapping(address => uint) public minterCounter;
-
+    mapping(address => uint256) public minterCounter;
 
     // Requested Documents by minter id sequence/autonumber
-    mapping(address => uint) public minterDocumentRequestCounter;
+    mapping(address => uint256) public minterDocumentRequestCounter;
 
     // Requests by minter by autonumber
-    mapping(address => mapping(uint => DocumentMintingRequest)) public minterDocumentRequests;
-    
-    enum DocumentMintingRequestStatus   {
-        REQUEST,
-        MINTED,
-        BURNED
-    }
+    mapping(address => mapping(uint256 => DocumentMintingRequest))
+        public minterDocumentRequests;
+
+    enum DocumentMintingRequestStatus {REQUEST, MINTED, BURNED}
 
     // Document minting request
     struct DocumentMintingRequest {
@@ -28,19 +24,19 @@ contract MinterCore {
         address toMinter; // NFT
         string toMinterDid;
         string documentURI;
-        uint status;    
-        uint timestamp;    
+        uint256 status;
+        uint256 timestamp;
         string description;
     }
 
     // Document minting provider
     struct DataProviderMinter {
         string name;
-        address paymentAddress;//*
+        address paymentAddress;
         bool hasUserKyc;
-        uint feeStructure;//*
-        uint created;
-        address factoryAddress;//*
+        uint256 feeStructure;
+        uint256 created;
+        address factoryAddress;
         bool enabled;
     }
 
@@ -52,12 +48,9 @@ contract MinterCore {
 
     // DocumentAnchored events
     event DocumentAnchored(
-        address indexed user, 
+        address indexed user,
         string indexed userDid,
         string documentURI,
-        uint id
+        uint256 id
     );
-
-  
 }
-
