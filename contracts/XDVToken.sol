@@ -88,13 +88,26 @@ contract XDVToken is ERC721Burnable, ERC721Pausable, ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
+    /**
+     * @dev Prevents the contract from working until `unpause()` is called.
+     * Used for Emergencies.
+     */
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    /**
+     * @dev If the contract is `paused()`, this will allow it to work again.
+     */
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
     function _beforeTokenTransfer(
         address from,
         address to,
         uint256 tokenId
     ) internal virtual override(ERC721, ERC721Pausable) {
-        require(!paused(), "XDV: Token execution is paused");
-
         if (to == address(0)) {
             paymentBeforeBurn(from);
         }

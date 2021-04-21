@@ -30,7 +30,7 @@ contract XDVController is MinterCore, IERC1271, Ownable {
     /**
      * @dev ERC-1271 Compatibility. This checks that the message signature was sent by the
      * contract's owner.
-     * @return magicValue either 0x00000000 for false or 0x1626ba7e for true
+     * @return magicValue either 0x00000000 for false or 0x1626ba7e for true.
      * 0x1626ba7e == bytes4(keccak256("isValidSignature(bytes32,bytes)")
      */
     function isValidSignature(bytes32 hash, bytes memory signature)
@@ -55,14 +55,6 @@ contract XDVController is MinterCore, IERC1271, Ownable {
         string memory documentURI,
         string memory description
     ) public returns (uint256) {
-        // // User must have a balance
-        // require(token.balanceOf(msg.sender) >= 0, "Invalid token balance");
-        // // User must have an allowance
-        // require(
-        //     token.allowance(msg.sender, address(this)) >= 0,
-        //     "Invalid token allowance"
-        // );
-
         uint256 i = minterDocumentRequestCounter[minterAddress];
 
         // Assign request to minter
