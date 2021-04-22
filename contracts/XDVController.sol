@@ -15,7 +15,6 @@ abstract contract XDVController is MinterCore, IERC1271, Ownable {
 
     // minters
     mapping(address => DataProviderMinter) internal minters;
-    mapping(address => uint256) public dataProviderAccounting;
 
     /**
      * @dev ERC-1271 Compatibility. This checks that the message signature was sent by the
