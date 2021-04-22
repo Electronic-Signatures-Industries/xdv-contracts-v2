@@ -112,7 +112,7 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(
       args.tokenId.toString(),
       tokenId.toString(),
-      "Must have returned the correct File Uri"
+      "Must have returned the correct Token ID"
     );
 
     // New token Balances
