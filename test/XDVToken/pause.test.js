@@ -2,22 +2,19 @@ const { assert } = require("chai");
 const Bluebird = require("bluebird");
 const MockCoin = artifacts.require("MockCoin");
 const XDVToken = artifacts.require("XDVToken");
-const XDVController = artifacts.require("XDVController");
 
 contract("XDVToken: Paused Contract", (accounts) => {
   const accountNotary = accounts[0];
   const accountDataProvider = accounts[1];
   const accountTokenOwner = accounts[2];
-  let controllerContract;
   let erc20Contract;
   let xdvContract;
   let requestId;
 
   before(async () => {
-    [erc20Contract, xdvContract, controllerContract] = await Bluebird.all([
+    [erc20Contract, xdvContract] = await Bluebird.all([
       MockCoin.deployed(),
       XDVToken.deployed(),
-      XDVController.deployed(),
     ]);
 
     // Mint erc20s and approve transfer of them
@@ -31,7 +28,7 @@ contract("XDVToken: Paused Contract", (accounts) => {
 
   beforeEach(async () => {
     // Starting Document
-    const result = await controllerContract.requestDataProviderService(
+    const result = await xdvContract.requestDataProviderService(
       "did:test:1",
       accountDataProvider,
       `did:eth:${accountNotary}`,
@@ -53,7 +50,7 @@ contract("XDVToken: Paused Contract", (accounts) => {
     await xdvContract.pause();
 
     try {
-      await controllerContract.mint(
+      await xdvContract.mint(
         requestId,
         accountTokenOwner,
         accountNotary,

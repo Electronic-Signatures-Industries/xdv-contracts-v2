@@ -4,7 +4,7 @@ const BN = require("bn.js");
 const MockCoin = artifacts.require("MockCoin");
 const XDVToken = artifacts.require("XDVToken");
 
-contract("XDV: Withdraw Balance", (accounts) => {
+contract("XDVToken: Withdraw Balance", (accounts) => {
   const amountToWithdraw = new BN(web3.utils.toWei("1337"));
   const contractOwner = accounts[0];
   const receiverAccount = accounts[3];
