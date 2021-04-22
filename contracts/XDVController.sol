@@ -1,17 +1,60 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./MinterCore.sol";
 import "./IERC1271.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-abstract contract XDVController is MinterCore, IERC1271, Ownable {
-    using EnumerableSet for EnumerableSet.AddressSet;
-    using Address for address payable;
+abstract contract XDVController is IERC1271, Ownable {
+    enum DocumentMintingRequestStatus {REQUEST, MINTED, BURNED}
+
+    // Document minting request
+    struct DocumentMintingRequest {
+        address user;
+        string userDid;
+        address toMinter; // NFT
+        string toMinterDid;
+        string documentURI;
+        uint256 status;
+        uint256 timestamp;
+        string description;
+    }
+
+    // Document minting provider
+    struct DataProviderMinter {
+        string name;
+        address paymentAddress;
+        bool hasUserKyc;
+        uint256 feeStructure;
+        uint256 created;
+        address factoryAddress;
+        bool enabled;
+    }
+
+    // RequestMinting events
+    event MinterRegistered(
+        address indexed minter, // NFT
+        string name
+    );
+
+    // DocumentAnchored events
+    event DocumentAnchored(
+        address indexed user,
+        string indexed userDid,
+        string documentURI,
+        uint256 id
+    );
+
+    // Documents provider mappings
+    mapping(address => uint256) public minterCounter;
+
+    // Requested Documents by minter id sequence/autonumber
+    mapping(address => uint256) public minterDocumentRequestCounter;
+
+    // Requests by minter by autonumber
+    mapping(address => mapping(uint256 => DocumentMintingRequest))
+        public minterDocumentRequests;
 
     // minters
     mapping(address => DataProviderMinter) internal minters;
