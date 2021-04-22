@@ -7,7 +7,6 @@ contract("XDVToken: Golden Path", (accounts) => {
   const accountNotary = accounts[0];
   const accountDataProvider = accounts[1];
   const accountTokenOwner = accounts[2];
-  let requestId;
   let tokenId;
   let erc20Contract;
   let xdvContract;
@@ -20,21 +19,18 @@ contract("XDVToken: Golden Path", (accounts) => {
     ]);
   });
 
-  it("should create the Data Provider", async () => {
+  it("should mint the tokens", async () => {
     // Starting Document
-    const result = await xdvContract.requestDataProviderService(
+    const documentResult = await xdvContract.requestDataProviderService(
       "did:test:1",
       accountDataProvider,
       `did:eth:${accountNotary}`,
       "ipfs://test",
       "Lorem Ipsum"
     );
-    requestId = result.receipt.logs[0].args.id;
+    const requestId = documentResult.receipt.logs[0].args.id;
 
-    assert.equal(requestId.toString(), "0");
-  });
-
-  it("should mint the tokens", async () => {
+    // Mint the token
     await xdvContract.mint(
       requestId,
       accountTokenOwner,

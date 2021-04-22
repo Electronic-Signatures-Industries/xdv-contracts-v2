@@ -2,6 +2,7 @@ const { assert } = require("chai");
 const XDVToken = artifacts.require("XDVToken");
 
 contract("XDVController: registerMinter()", (accounts) => {
+  const accountNotary = accounts[2];
   const accountDataProvider = accounts[1];
   let xdvContract;
 
@@ -22,5 +23,22 @@ contract("XDVController: registerMinter()", (accounts) => {
 
     const documentMinterAddress = res.logs[0].args.minter;
     assert.strictEqual(documentMinterAddress, accountDataProvider);
+  });
+
+  it("should create the Data Provider", async () => {
+    // Starting Document
+    const result = await xdvContract.requestDataProviderService(
+      "did:test:1",
+      accountDataProvider,
+      `did:eth:${accountNotary}`,
+      "ipfs://test",
+      "Lorem Ipsum"
+    );
+    const event = result.receipt.logs[0];
+
+    assert.strictEqual(event.event, "DocumentAnchored");
+    assert.strictEqual(event.args.id.toString(), "0");
+    assert.strictEqual(event.args.user, accounts[0]);
+    assert.strictEqual(event.args.documentURI, "ipfs://test");
   });
 });
