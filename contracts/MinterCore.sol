@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 /**
  *  @dev MinterCore
  */
-contract MinterCore {
+abstract contract MinterCore {
     // Documents provider mappings
     mapping(address => uint256) public minterCounter;
 

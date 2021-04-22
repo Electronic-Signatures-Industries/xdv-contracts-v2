@@ -1,8 +1,8 @@
 const { assert } = require("chai");
-const XDVController = artifacts.require("XDVController");
+const XDVToken = artifacts.require("XDVToken");
 
 contract("XDVController: ERC-1271", (_accounts) => {
-  let controllerContract;
+  let xdvContract;
 
   /*
    * TODO: Find a way to generate this on-the-fly with Truffle's Web3 without leaking private keys.
@@ -19,10 +19,10 @@ contract("XDVController: ERC-1271", (_accounts) => {
     "0x10408bcc64d326d681d10b8661e9e5a710a48eb3b7a059a38cb24771a08e6bc964cbea87851ce9b849dfb300bb9e0e053e20d3b53382092116f3389c9c600d341c";
 
   before(async () => {
-    controllerContract = await XDVController.deployed();
-    assert.isNotNull(controllerContract, "Contract must exist");
+    xdvContract = await XDVToken.deployed();
+    assert.isNotNull(xdvContract, "Contract must exist");
 
-    const owner = await controllerContract.owner();
+    const owner = await xdvContract.owner();
     assert.equal(
       owner,
       "0xA83B070a68336811e9265fbEc6d49B98538F61EA",
@@ -31,7 +31,7 @@ contract("XDVController: ERC-1271", (_accounts) => {
   });
 
   it("should return the Magic Number when the signer is the owner", async () => {
-    const magicNumber = await controllerContract.isValidSignature(
+    const magicNumber = await xdvContract.isValidSignature(
       messageHash,
       correctSignature
     );
@@ -39,7 +39,7 @@ contract("XDVController: ERC-1271", (_accounts) => {
   });
 
   it("should return false when the signer is not the owner", async () => {
-    const magicNumber = await controllerContract.isValidSignature(
+    const magicNumber = await xdvContract.isValidSignature(
       messageHash,
       wrongSignature
     );

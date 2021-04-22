@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-pragma experimental ABIEncoderV2;
-
-import "./XDVToken.sol";
 import "./MinterCore.sol";
 import "./IERC1271.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -12,20 +9,13 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract XDVController is MinterCore, IERC1271, Ownable {
+abstract contract XDVController is MinterCore, IERC1271, Ownable {
     using EnumerableSet for EnumerableSet.AddressSet;
     using Address for address payable;
-    XDVToken private platformToken;
-    IERC20 public token;
 
     // minters
     mapping(address => DataProviderMinter) internal minters;
     mapping(address => uint256) public dataProviderAccounting;
-
-    constructor(address stablecoin, address xdv) {
-        token = IERC20(stablecoin);
-        platformToken = XDVToken(xdv);
-    }
 
     /**
      * @dev ERC-1271 Compatibility. This checks that the message signature was sent by the
@@ -46,7 +36,7 @@ contract XDVController is MinterCore, IERC1271, Ownable {
     }
 
     /**
-     * User requests anchored document to be process
+     * @dev User requests anchored document to be processed.
      */
     function requestDataProviderService(
         string memory minterDid,
@@ -76,33 +66,7 @@ contract XDVController is MinterCore, IERC1271, Ownable {
     }
 
     /**
-     *  @dev Mints a platform token.
-     */
-    function mint(
-        uint256 requestId,
-        address user,
-        address dataProvider,
-        string memory tokenURI
-    ) public returns (uint256) {
-        require(
-            minterDocumentRequests[dataProvider][requestId].status ==
-                uint256(DocumentMintingRequestStatus.REQUEST),
-            "Document with invalid status"
-        );
-        require(user != address(0), "Invalid address");
-
-        // updates a request
-        minterDocumentRequests[dataProvider][requestId].status = uint256(
-            DocumentMintingRequestStatus.MINTED
-        );
-
-        minterCounter[dataProvider] = minterCounter[dataProvider] + 1;
-        return platformToken.mint(user, tokenURI);
-    }
-
-    /**
      * @dev Registers a data tokenization service
-     *
      */
     function registerMinter(
         string memory name,

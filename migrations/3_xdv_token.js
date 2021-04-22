@@ -1,10 +1,10 @@
 const MockCoin = artifacts.require("MockCoin");
 const XDVToken = artifacts.require("XDVToken");
-const XDVController = artifacts.require("XDVController");
 
 async function usdcAddress(network) {
   switch (network) {
     case "development":
+    case "test":
       const coinContract = await MockCoin.deployed();
       return coinContract.address;
 
@@ -17,13 +17,7 @@ async function usdcAddress(network) {
 module.exports = async (deployer, network, accounts) => {
   let coinAddress = await usdcAddress(network);
 
-  await deployer.deploy(
-    XDVToken,
-    "XDV Document Token v2",
-    "XDV2",
-    coinAddress,
-    accounts[0]
-  );
+  await deployer.deploy(XDVToken, coinAddress, accounts[0]);
 
   // Setup default shares
   const datatoken = await XDVToken.deployed();
@@ -31,6 +25,4 @@ module.exports = async (deployer, network, accounts) => {
     datatoken.setServiceFeeForContract(web3.utils.toWei("0.1")),
     datatoken.setServiceFeeForPaymentAddress(web3.utils.toWei("0.9")),
   ]);
-
-  await deployer.deploy(XDVController, coinAddress, datatoken.address);
 };
