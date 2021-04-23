@@ -50,8 +50,9 @@ contract("XDVToken: Golden Path", (accounts) => {
     });
     assert.equal(owner, accountTokenOwner);
     assert.equal(balance, 1);
+  });
 
-    // Should preserve the fileUri
+  it("should save the fileUri", async () => {
     const fileUri = await xdvContract.fileUri(tokenId);
     expect(fileUri).to.equal("ipfs://test2");
   });
