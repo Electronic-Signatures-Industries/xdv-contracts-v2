@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Truffle Tests
+    name: Tests
     runs-on: ubuntu-latest
     container: node:15
 
@@ -38,5 +38,8 @@ jobs:
         # The Mnemonic is needed only until the `erc1271` test is fixed to not need static addresses
         run: npm run ganache --workspace=contracts -- -m "describe uncle will various ankle film brother pelican apple congress animal segment" &
 
-      - name: Run Tests
+      - name: Truffle Tests
         run: npm run truffle --workspace=contracts -- test
+
+      - name: Nest Tests
+        run: npm run test --workspace=server
