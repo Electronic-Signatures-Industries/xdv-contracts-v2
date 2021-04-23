@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/Electronic-Signatures-Industries/xdv-contracts-v2#readme",
   "workspaces": [
-    "contracts"
+    "contracts",
+    "server"
   ]
 }
