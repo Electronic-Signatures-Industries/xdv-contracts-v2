@@ -6,25 +6,28 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract XDVToken is
     XDVController,
     ERC721Burnable,
     ERC721Pausable,
-    ERC721URIStorage
+    ERC721Enumerable
 {
     using Counters for Counters.Counter;
+
     Counters.Counter private _tokenIds;
     IERC20 public stablecoin;
     uint256 public serviceFeeForPaymentAddress = 0;
     uint256 public serviceFeeForContract = 0;
     address public paymentAddress;
+    mapping(uint256 => string) public fileUri;
 
     event Withdrawn(address indexed paymentAddress, uint256 amount);
 
     event ServiceFeePaid(
+        uint256 indexed tokenId,
         address indexed from,
         address indexed paymentAddress,
         uint256 paidToContract,
@@ -53,6 +56,16 @@ contract XDVToken is
         paymentAddress = newAddress;
     }
 
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+
     /**
      * @dev Mints a XDV Data Token if whitelisted
      * @return tokenId
@@ -72,40 +85,16 @@ contract XDVToken is
 
         uint256 newItemId = _tokenIds.current();
         _safeMint(user, newItemId);
-        _setTokenURI(newItemId, uri);
+        fileUri[newItemId] = uri;
 
         // updates a request
         minterDocumentRequests[dataProvider][requestId].status = uint256(
             DocumentMintingRequestStatus.MINTED
         );
 
-        minterCounter[dataProvider] = minterCounter[dataProvider] + 1;
+        minterCounter[dataProvider] = minterCounter[dataProvider]++;
 
         return newItemId;
-    }
-
-    /**
-     * @dev Just overrides the superclass' function. Fixes inheritance
-     * source: https://forum.openzeppelin.com/t/how-do-inherit-from-erc721-erc721enumerable-and-erc721uristorage-in-v4-of-openzeppelin-contracts/6656/4
-     */
-    function _burn(uint256 tokenId)
-        internal
-        override(ERC721, ERC721URIStorage)
-    {
-        super._burn(tokenId);
-    }
-
-    /**
-     * @dev Just overrides the superclass' function. Fixes inheritance.
-     * source: https://forum.openzeppelin.com/t/how-do-inherit-from-erc721-erc721enumerable-and-erc721uristorage-in-v4-of-openzeppelin-contracts/6656/4
-     */
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        return super.tokenURI(tokenId);
     }
 
     /**
@@ -130,10 +119,10 @@ contract XDVToken is
         address from,
         address to,
         uint256 tokenId
-    ) internal virtual override(ERC721, ERC721Pausable) {
+    ) internal virtual override(ERC721, ERC721Pausable, ERC721Enumerable) {
         // Token about to be burned.
         if (to == address(0)) {
-            _paymentBeforeBurn(from);
+            _paymentBeforeBurn(from, tokenId);
         }
 
         super._beforeTokenTransfer(from, to, tokenId);
@@ -143,7 +132,10 @@ contract XDVToken is
      * @dev tries to execute the payment when the token is burned.
      * Reverts if the payment procedure could not be completed.
      */
-    function _paymentBeforeBurn(address tokenHolder) internal virtual {
+    function _paymentBeforeBurn(address tokenHolder, uint256 tokenId)
+        internal
+        virtual
+    {
         require(
             paymentAddress != address(0),
             "XDV: Must have a payment address"
@@ -168,6 +160,7 @@ contract XDVToken is
         );
 
         emit ServiceFeePaid(
+            tokenId,
             tokenHolder,
             paymentAddress,
             serviceFeeForContract,

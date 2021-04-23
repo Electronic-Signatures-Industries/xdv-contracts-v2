@@ -52,6 +52,11 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(balance, 1);
   });
 
+  it("should save the fileUri", async () => {
+    const fileUri = await xdvContract.fileUri(tokenId);
+    expect(fileUri).to.equal("ipfs://test2");
+  });
+
   it("should burn and charge the account", async () => {
     // Mint erc20s and approve transfer of them
     await Bluebird.all([
@@ -105,6 +110,11 @@ contract("XDVToken: Golden Path", (accounts) => {
       feeForPaymentAddress.toString(),
       "Should Pay the Payment Address its Fee"
     );
+    assert.equal(
+      args.tokenId.toString(),
+      tokenId.toString(),
+      "Must have returned the correct Token ID"
+    );
 
     // New token Balances
     const {
@@ -134,5 +144,10 @@ contract("XDVToken: Golden Path", (accounts) => {
       startingAddressBalance.add(feeForPaymentAddress).toString(),
       "The Payment Address must have received tokens"
     );
+  });
+
+  it("should preserve the File Uri for later retrieval", async () => {
+    const fileUri = await xdvContract.fileUri(tokenId);
+    expect(fileUri).to.equal("ipfs://test2");
   });
 });
