@@ -18,7 +18,7 @@ contract("XDVController: registerMinter()", (accounts) => {
       web3.utils.toWei("20"),
       {
         from: accountDataProvider,
-      }
+      },
     );
 
     const documentMinterAddress = res.logs[0].args.minter;
@@ -32,7 +32,7 @@ contract("XDVController: registerMinter()", (accounts) => {
       accountDataProvider,
       `did:eth:${accountNotary}`,
       "ipfs://test",
-      "Lorem Ipsum"
+      "Lorem Ipsum",
     );
     const event = result.receipt.logs[0];
 

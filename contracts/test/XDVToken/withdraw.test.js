@@ -32,7 +32,7 @@ contract("XDVToken: Withdraw Balance", (accounts) => {
     const expectedBalance = receiverBalance1.add(amountToWithdraw);
     assert(
       expectedBalance.eq(receiverBalance2),
-      "Receiver account must have the expected balance"
+      "Receiver account must have the expected balance",
     );
   });
 
@@ -48,7 +48,7 @@ contract("XDVToken: Withdraw Balance", (accounts) => {
       const receiverBalance2 = await erc20Contract.balanceOf(receiverAccount);
       assert(
         receiverBalance1.eq(receiverBalance2),
-        "Receiver account must have the expected balance"
+        "Receiver account must have the expected balance",
       );
     }
   });

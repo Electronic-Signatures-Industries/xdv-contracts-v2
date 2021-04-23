@@ -33,7 +33,7 @@ contract("XDVToken: Paused Contract", (accounts) => {
       accountDataProvider,
       `did:eth:${accountNotary}`,
       "ipfs://test",
-      "Lorem Ipsum"
+      "Lorem Ipsum",
     );
     requestId = result.receipt.logs[0].args.id;
   });
@@ -54,7 +54,7 @@ contract("XDVToken: Paused Contract", (accounts) => {
         requestId,
         accountTokenOwner,
         accountNotary,
-        "ipfs://test2"
+        "ipfs://test2",
       );
 
       assert.fail("Should not arrive here");

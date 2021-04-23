@@ -26,7 +26,7 @@ contract("XDVToken: Golden Path", (accounts) => {
       accountDataProvider,
       `did:eth:${accountNotary}`,
       "ipfs://test",
-      "Lorem Ipsum"
+      "Lorem Ipsum",
     );
     const requestId = documentResult.receipt.logs[0].args.id;
 
@@ -35,7 +35,7 @@ contract("XDVToken: Golden Path", (accounts) => {
       requestId,
       accountTokenOwner,
       accountNotary,
-      "ipfs://test2"
+      "ipfs://test2",
     );
 
     const result = await xdvContract.getPastEvents("Transfer", {
@@ -93,27 +93,27 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(
       args.from,
       accountTokenOwner,
-      "Should have come from NFT Owner"
+      "Should have come from NFT Owner",
     );
     assert.equal(
       args.paymentAddress,
       accountNotary,
-      "Should sent the Fee to the correct address"
+      "Should sent the Fee to the correct address",
     );
     assert.equal(
       args.paidToContract.toString(),
       feeForContract.toString(),
-      "Should Pay the Contract its correct share"
+      "Should Pay the Contract its correct share",
     );
     assert.equal(
       args.paidToPaymentAddress.toString(),
       feeForPaymentAddress.toString(),
-      "Should Pay the Payment Address its Fee"
+      "Should Pay the Payment Address its Fee",
     );
     assert.equal(
       args.tokenId.toString(),
       tokenId.toString(),
-      "Must have returned the correct Token ID"
+      "Must have returned the correct Token ID",
     );
 
     // New token Balances
@@ -132,17 +132,17 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(
       clientBalance.toString(),
       startingClientBalance.sub(totalFeePaid).toString(),
-      "The client's balance must have been reduced"
+      "The client's balance must have been reduced",
     );
     assert.equal(
       contractBalance.toString(),
       startingContractBalance.add(feeForContract).toString(),
-      "The contract must have received tokens"
+      "The contract must have received tokens",
     );
     assert.equal(
       paymentAddressBalance.toString(),
       startingAddressBalance.add(feeForPaymentAddress).toString(),
-      "The Payment Address must have received tokens"
+      "The Payment Address must have received tokens",
     );
   });
 
