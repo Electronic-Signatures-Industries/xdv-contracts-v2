@@ -103,4 +103,12 @@ module.exports = {
   db: {
     enabled: false,
   },
+
+  plugins: ["truffle-plugin-modularizer"],
+  modularizer: {
+    // output: 'src/index.js',
+    // target: 'build/contracts'
+    includeOnly: ["XDVToken"],
+    // networks: []
+  },
 };
