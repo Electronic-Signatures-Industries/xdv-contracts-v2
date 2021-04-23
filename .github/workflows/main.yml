@@ -35,6 +35,8 @@ jobs:
       run: npm install
 
     - name: Ganache in the background
-      run: npm run ganache -- -m "describe uncle will various ankle film brother pelican apple congress animal segment" &
+      # The Mnemonic is needed only until the `erc1271` test is fixed to not need static addresses
+      run: npm run ganache --workspace=contracts -- -m "describe uncle will various ankle film brother pelican apple congress animal segment" &
 
-    - run: npm run truffle -- test
+    - name: Run Tests
+      run: npm run truffle --workspace=contracts -- test
