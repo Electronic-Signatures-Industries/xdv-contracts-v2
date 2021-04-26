@@ -26,14 +26,14 @@ contract("XDVController: ERC-1271", (_accounts) => {
     assert.equal(
       owner,
       "0xA83B070a68336811e9265fbEc6d49B98538F61EA",
-      "Owner is different than expected. The tests will fail"
+      "Owner is different than expected. The tests will fail",
     );
   });
 
   it("should return the Magic Number when the signer is the owner", async () => {
     const magicNumber = await xdvContract.isValidSignature(
       messageHash,
-      correctSignature
+      correctSignature,
     );
     assert.equal("0x1626ba7e", magicNumber);
   });
@@ -41,7 +41,7 @@ contract("XDVController: ERC-1271", (_accounts) => {
   it("should return false when the signer is not the owner", async () => {
     const magicNumber = await xdvContract.isValidSignature(
       messageHash,
-      wrongSignature
+      wrongSignature,
     );
     assert.equal("0x00000000", magicNumber);
   });

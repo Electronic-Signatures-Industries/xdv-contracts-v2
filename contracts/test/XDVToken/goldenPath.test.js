@@ -26,24 +26,19 @@ contract("XDVToken: Golden Path", (accounts) => {
       accountDataProvider,
       `did:eth:${accountNotary}`,
       "ipfs://test",
-      "Lorem Ipsum"
+      "Lorem Ipsum",
     );
     const requestId = documentResult.receipt.logs[0].args.id;
 
     // Mint the token
-    await xdvContract.mint(
+    const mintResult = await xdvContract.mint(
       requestId,
       accountTokenOwner,
       accountNotary,
-      "ipfs://test2"
+      "ipfs://test2",
     );
 
-    const result = await xdvContract.getPastEvents("Transfer", {
-      fromBlock: 0,
-      toBlock: "latest",
-    });
-
-    tokenId = result[0].returnValues.tokenId;
+    ({ tokenId } = mintResult.logs.find((e) => e.event === "Transfer").args);
     const { owner, balance } = await Bluebird.props({
       owner: xdvContract.ownerOf(tokenId),
       balance: xdvContract.balanceOf(accountTokenOwner),
@@ -93,27 +88,27 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(
       args.from,
       accountTokenOwner,
-      "Should have come from NFT Owner"
+      "Should have come from NFT Owner",
     );
     assert.equal(
       args.paymentAddress,
       accountNotary,
-      "Should sent the Fee to the correct address"
+      "Should sent the Fee to the correct address",
     );
     assert.equal(
       args.paidToContract.toString(),
       feeForContract.toString(),
-      "Should Pay the Contract its correct share"
+      "Should Pay the Contract its correct share",
     );
     assert.equal(
       args.paidToPaymentAddress.toString(),
       feeForPaymentAddress.toString(),
-      "Should Pay the Payment Address its Fee"
+      "Should Pay the Payment Address its Fee",
     );
     assert.equal(
       args.tokenId.toString(),
       tokenId.toString(),
-      "Must have returned the correct Token ID"
+      "Must have returned the correct Token ID",
     );
 
     // New token Balances
@@ -132,22 +127,46 @@ contract("XDVToken: Golden Path", (accounts) => {
     assert.equal(
       clientBalance.toString(),
       startingClientBalance.sub(totalFeePaid).toString(),
-      "The client's balance must have been reduced"
+      "The client's balance must have been reduced",
     );
     assert.equal(
       contractBalance.toString(),
       startingContractBalance.add(feeForContract).toString(),
-      "The contract must have received tokens"
+      "The contract must have received tokens",
     );
     assert.equal(
       paymentAddressBalance.toString(),
       startingAddressBalance.add(feeForPaymentAddress).toString(),
-      "The Payment Address must have received tokens"
+      "The Payment Address must have received tokens",
     );
   });
 
   it("should preserve the File Uri for later retrieval", async () => {
     const fileUri = await xdvContract.fileUri(tokenId);
     expect(fileUri).to.equal("ipfs://test2");
+  });
+
+  it("should mint a second token with a different ID", async () => {
+    // Starting Document
+    const documentResult = await xdvContract.requestDataProviderService(
+      "did:test:1",
+      accountDataProvider,
+      `did:eth:${accountNotary}`,
+      "ipfs://test",
+      "Lorem Ipsum",
+    );
+    const requestId = documentResult.receipt.logs[0].args.id;
+
+    // Mint the token
+    const mintResult = await xdvContract.mint(
+      requestId,
+      accountTokenOwner,
+      accountNotary,
+      "ipfs://test2",
+    );
+
+    const event = mintResult.logs.find((e) => e.event === "Transfer");
+    const { tokenId: tokenId2 } = event.args;
+    expect(tokenId2.toString()).not.equal(tokenId);
   });
 });
