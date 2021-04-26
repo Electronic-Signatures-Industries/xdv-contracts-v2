@@ -31,19 +31,14 @@ contract("XDVToken: Golden Path", (accounts) => {
     const requestId = documentResult.receipt.logs[0].args.id;
 
     // Mint the token
-    await xdvContract.mint(
+    const mintResult = await xdvContract.mint(
       requestId,
       accountTokenOwner,
       accountNotary,
       "ipfs://test2",
     );
 
-    const result = await xdvContract.getPastEvents("Transfer", {
-      fromBlock: 0,
-      toBlock: "latest",
-    });
-
-    tokenId = result[0].returnValues.tokenId;
+    ({ tokenId } = mintResult.logs.find((e) => e.event === "Transfer").args);
     const { owner, balance } = await Bluebird.props({
       owner: xdvContract.ownerOf(tokenId),
       balance: xdvContract.balanceOf(accountTokenOwner),
@@ -149,5 +144,29 @@ contract("XDVToken: Golden Path", (accounts) => {
   it("should preserve the File Uri for later retrieval", async () => {
     const fileUri = await xdvContract.fileUri(tokenId);
     expect(fileUri).to.equal("ipfs://test2");
+  });
+
+  it("should mint a second token with a different ID", async () => {
+    // Starting Document
+    const documentResult = await xdvContract.requestDataProviderService(
+      "did:test:1",
+      accountDataProvider,
+      `did:eth:${accountNotary}`,
+      "ipfs://test",
+      "Lorem Ipsum",
+    );
+    const requestId = documentResult.receipt.logs[0].args.id;
+
+    // Mint the token
+    const mintResult = await xdvContract.mint(
+      requestId,
+      accountTokenOwner,
+      accountNotary,
+      "ipfs://test2",
+    );
+
+    const event = mintResult.logs.find((e) => e.event === "Transfer");
+    const { tokenId: tokenId2 } = event.args;
+    expect(tokenId2.toString()).not.equal(tokenId);
   });
 });

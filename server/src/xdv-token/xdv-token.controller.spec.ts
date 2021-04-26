@@ -16,7 +16,7 @@ describe.skip("AppController", () => {
 
   describe("root", () => {
     it('should return "Hello World!"', () => {
-      expect(controller.getOwner()).toBe("Hello World!");
+      expect(controller.getOwner()).to.be("Hello World!");
     });
   });
 });

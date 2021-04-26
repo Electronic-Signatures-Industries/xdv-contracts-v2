@@ -3,7 +3,8 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "npm run typechain --workspace=server"
+    "postinstall": "npm run typechain --workspace=server",
+    "demo": "npm run truffle exec scripts/demo.js --workspace=contracts"
   },
   "repository": {
     "type": "git",
