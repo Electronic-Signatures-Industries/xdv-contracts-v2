@@ -2,6 +2,9 @@
   "name": "xdv-contracts-v2",
   "version": "2.0.0",
   "private": true,
+  "scripts": {
+    "postinstall": "npm run typechain --workspace=server"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Electronic-Signatures-Industries/xdv-contracts-v2.git"

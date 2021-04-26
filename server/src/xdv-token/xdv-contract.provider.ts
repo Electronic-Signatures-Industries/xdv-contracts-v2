@@ -7,10 +7,9 @@ const Web3 = require("web3"); // eslint-disable-line @typescript-eslint/no-var-r
 export const XdvContractProvider: FactoryProvider<Promise<XDVTokenInstance>> = {
   provide: XDV_CONTRACT,
 
-  useFactory: async () => {
-    const provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
+  useFactory: async (): Promise<XDVTokenInstance> => {
+    const provider = new Web3.providers.WebsocketProvider("ws://127.0.0.1:8545");
     const web3 = new Web3(provider);
-    const contractInstance: XDVTokenInstance = XDVToken(web3).at(XDV_CONTRACT_ADDRESSES.GANACHE);
-    return contractInstance;
+    return XDVToken(web3).at(XDV_CONTRACT_ADDRESSES.GANACHE);
   },
 };
