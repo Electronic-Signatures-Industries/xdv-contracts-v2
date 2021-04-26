@@ -40,6 +40,3 @@ jobs:
 
       - name: Truffle Tests
         run: npm run truffle --workspace=contracts -- test
-
-      - name: Nest Tests
-        run: npm run test --workspace=server
