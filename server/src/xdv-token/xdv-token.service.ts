@@ -1,24 +1,20 @@
 import { Inject, Injectable, Logger, OnModuleDestroy } from "@nestjs/common";
-import { XDVTokenInstance } from "types/truffle-contracts";
+import EventEmitter from "events";
+import { XDVToken } from "types/typechain/XDVToken";
 import { XDV_CONTRACT } from "./constants";
-import { Web3Provider } from "./web3.provider";
 
 @Injectable()
 export class XdvTokenService implements OnModuleDestroy {
   private readonly logger = new Logger(XdvTokenService.name);
-  private readonly subscription;
+  private readonly subscription: EventEmitter;
 
   constructor(
-    @Inject(Web3Provider) private readonly web3Provider: Web3Provider,
-    @Inject(XDV_CONTRACT) private readonly xvdContract: XDVTokenInstance
+    @Inject(XDV_CONTRACT) private readonly xvdContract: XDVToken
   ) {
-    // TODO: This listener does not work with Truffle. Using Web3JS instead.
-    const web3 = this.web3Provider.getWeb3();
-    const web3Contract = new web3.eth.Contract(xvdContract.abi, xvdContract.address);
-    this.subscription = web3Contract.events.ServiceFeePaid({ fromBlock: 0 }, async (_, event) => {
+    this.subscription = xvdContract.events.ServiceFeePaid({ fromBlock: 0 }, async (_, event) => {
       const { tokenId } = event.returnValues;
       this.logger.log(`ServiceFeePaidEvent: tokenId - ${tokenId}`);
-      const fileUri = await xvdContract.fileUri(tokenId)
+      const fileUri = await xvdContract.methods.fileUri(tokenId).call();
       this.logger.log(`File to Transfer: ${fileUri}`)
     });
 
@@ -26,11 +22,11 @@ export class XdvTokenService implements OnModuleDestroy {
   }
 
   onModuleDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription.removeAllListeners();
     this.logger.log("Unsubscribed");
   }
 
   async getOwner(): Promise<string> {
-    return this.xvdContract.owner();
+    return this.xvdContract.methods.owner().call();
   }
 }

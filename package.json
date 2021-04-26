@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "npm run typechain --workspace=server",
+    "postinstall": "typechain --target=web3-v1 contracts/build/contracts/XDVToken.json --outDir=server/types/typechain",
     "demo": "npm run truffle exec scripts/demo.js --workspace=contracts"
   },
   "repository": {
@@ -19,5 +19,9 @@
   "workspaces": [
     "contracts",
     "server"
-  ]
+  ],
+  "devDependencies": {
+    "@typechain/web3-v1": "^2.2.0",
+    "typechain": "^4.0.3"
+  }
 }

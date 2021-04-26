@@ -16,7 +16,6 @@
     "ganache-cli": "^6.12.2",
     "mocha": "^8.3.2",
     "truffle": "^5.3.2",
-    "truffle-plugin-modularizer": "^1.2.3",
     "truffle-typings": "^1.0.8"
   }
 }
