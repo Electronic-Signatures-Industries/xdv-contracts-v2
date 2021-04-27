@@ -24,6 +24,7 @@ async function script() {
     "Lorem Ipsum",
   );
   const requestId = documentResult.receipt.logs[0].args.id;
+  console.log(`Document Anchored: ID: ${requestId}`);
 
   // Mint the token
   const mintResult = await xdvContract.mint(

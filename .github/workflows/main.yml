@@ -13,7 +13,7 @@ jobs:
   build:
     name: Tests
     runs-on: ubuntu-latest
-    container: node:15
+    container: node:16
 
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +36,7 @@ jobs:
 
       - name: Ganache in the background
         # The Mnemonic is needed only until the `erc1271` test is fixed to not need static addresses
-        run: npm run ganache --workspace=contracts -- -m "describe uncle will various ankle film brother pelican apple congress animal segment" &
+        run: npm run ganache -- -m "describe uncle will various ankle film brother pelican apple congress animal segment" &
 
       - name: Truffle Tests
         run: npm run truffle --workspace=contracts -- test
