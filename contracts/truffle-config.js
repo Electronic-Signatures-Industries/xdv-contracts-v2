@@ -29,10 +29,16 @@ module.exports = {
       network_id: '10' // Match any network id
     },
     development: {
+<<<<<<< Updated upstream
       from: '0xDf010F43BC13EFc69CA56f3FB0D654Cf98B9310e',
       host: 'localhost' ,
       port: 8545,
       network_id: '*' // Match any network id
+=======
+      host: "127.0.0.1", // Localhost (default: none)
+      port: 8545, // Standard Ethereum port (default: none)
+      network_id: "10", // Any network (default: none)
+>>>>>>> Stashed changes
     },
     rinkeby: {
       provider: () =>
@@ -51,6 +57,7 @@ module.exports = {
       gasPrice: 30000000000
     },
 
+<<<<<<< Updated upstream
     ropsten: {
       provider: () =>
         new HDWalletProvider(process.env.MNEMONIC, process.env.URL),
@@ -61,3 +68,19 @@ module.exports = {
     }
   }
 };
+=======
+  db: {
+    enabled: false,
+  },
+
+  plugins: ["truffle-plugin-dist"],
+
+  schema: {
+    XDVToken: {
+      abi: true,
+      addresses: true,
+      byteCodeHash: true,
+    },
+  },
+};
+>>>>>>> Stashed changes
