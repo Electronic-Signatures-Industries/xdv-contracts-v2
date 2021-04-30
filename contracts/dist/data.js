@@ -1,4 +1,4 @@
-// updated at: 2021-04-30T15:02:57.556Z
+// updated at: 2021-04-30T17:57:54.290Z
 
 /* eslint-disable */
 
@@ -282,8 +282,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -315,8 +314,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -335,8 +333,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -360,8 +357,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -385,8 +381,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -405,8 +400,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -425,8 +419,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -485,8 +478,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -499,8 +491,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -513,8 +504,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -533,8 +523,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -547,8 +536,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -561,8 +549,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -706,8 +693,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -720,8 +706,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -752,8 +737,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -766,8 +750,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -786,8 +769,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -811,8 +793,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -831,8 +812,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [],
@@ -845,8 +825,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -940,8 +919,7 @@ module.exports = {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
       },
       {
         "inputs": [
@@ -1008,6 +986,6 @@ module.exports = {
     "addresses": {
       "10": "0x5C87bA6a1Ba1aB89345D4c15D732eE91c97ef38d"
     },
-    "byteCodeHash": "0xcac01047bd5f358fc00993d5eec4ca98b279a314c02fbf43b0f2ddc99c92706a"
+    "byteCodeHash": "0x328050a4ceb3959e52356ff9800341c5598b309771491bb8f1bf5ac999cd2e0b"
   }
 };

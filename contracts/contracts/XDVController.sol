@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./IERC1271.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/interfaces/IERC1271.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 abstract contract XDVController is IERC1271, Ownable {
     enum DocumentMintingRequestStatus {REQUEST, MINTED, BURNED}
@@ -62,6 +61,7 @@ abstract contract XDVController is IERC1271, Ownable {
     /**
      * @dev ERC-1271 Compatibility. This checks that the message signature was sent by the
      * contract's owner.
+     * Inspired by this implementation: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/mocks/ERC1271WalletMock.sol
      * @return magicValue either 0x00000000 for false or 0x1626ba7e for true.
      * 0x1626ba7e == bytes4(keccak256("isValidSignature(bytes32,bytes)")
      */
@@ -71,8 +71,6 @@ abstract contract XDVController is IERC1271, Ownable {
         override
         returns (bytes4 magicValue)
     {
-        // Inspiration 1: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/mocks/ERC1271WalletMock.sol
-        // Inspiration 2: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/2424/files#diff-ff994ffdd277f7cdf0abeb3093d8d5eb7b072a80ebd89f3578cc38ecd1cb6cf2R24
         address signer = ECDSA.recover(hash, signature);
         return signer == owner() ? this.isValidSignature.selector : bytes4(0);
     }
