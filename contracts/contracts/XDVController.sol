@@ -6,6 +6,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+/// @title 
+/// @author IFESA - Roberto Zubieta
+/// @notice
+/// @dev
+
 abstract contract XDVController is IERC1271, Ownable {
     enum DocumentMintingRequestStatus {REQUEST, MINTED, BURNED}
 

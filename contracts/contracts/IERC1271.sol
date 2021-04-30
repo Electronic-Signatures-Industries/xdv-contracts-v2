@@ -2,6 +2,11 @@
 
 pragma solidity ^0.8.0;
 
+/// @title 
+/// @author IFESA - Roberto Zubieta
+/// @notice
+/// @dev
+
 /**
  * @dev Copied from @openzeppelin/contracts/interfaces/IERC1271.sol.
  * When available in update, please remove this copy.

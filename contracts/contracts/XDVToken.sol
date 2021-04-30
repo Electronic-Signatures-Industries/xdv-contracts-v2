@@ -9,6 +9,11 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+/// @title 
+/// @author IFESA - Roberto Zubieta
+/// @notice
+/// @dev
+
 contract XDVToken is
     XDVController,
     ERC721Burnable,
