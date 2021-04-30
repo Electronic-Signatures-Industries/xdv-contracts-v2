@@ -1,4 +1,4 @@
-// updated at: 2021-04-30T15:02:57.556Z
+// updated at: 2021-04-30T17:57:54.290Z
 
 export declare enum ContractNames {
   XDVToken = 'XDVToken',
