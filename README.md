@@ -20,6 +20,8 @@ We have a small demo that shows the entire flow of the platform, from anchoring 
 
 1. `npm run truffle migrate --workspace=contracts`. Compile and Upload the contracts to the development Ethereum Network.
 
+1. `npm run truffle run dist --workspace=contracts`. Run `truffle-plugin-dist` to rewrite the `contracts/dist` folder with the new data.
+
 1. `npm run start --workspace=server`. Run the server, and let it running.
 
 1. `npm run demo`. This will execute the demo script.
