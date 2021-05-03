@@ -5,18 +5,19 @@ async function usdcAddress(network) {
   switch (network) {
     case "development":
     case "test":
+    default:
       const coinContract = await MockCoin.deployed();
       return coinContract.address;
 
-    default:
-      // USDC Rinkeby Network
-      return "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d";
+    //default:
+      // BUSD Binance Smart Chain testnet
+      //return "0x0161ae441aac490269db3cfb5fd4b9e1e5cce836";
   }
 }
 
 module.exports = async (deployer, network, accounts) => {
   let coinAddress = await usdcAddress(network);
-
+  console.log(coinAddress, accounts);
   await deployer.deploy(XDVToken, coinAddress, accounts[0]);
 
   // Setup default shares

@@ -82,7 +82,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -118,3 +117,6 @@ dist
 # Contracts that are not used
 build/contracts/**
 !build/contracts/XDVToken.json
+
+# Add back the `dist/` folder
+!dist

@@ -53,9 +53,10 @@ async function script() {
   console.log("Token Burned. ID: " + event.args.tokenId.toString());
 }
 
-(async function () {
-  await script()
-})();
-// module.exports = (callback) => {
-//   script().then(callback);
-// };
+// (async function () {
+//   await script
+// })();
+
+module.exports = (callback) => {
+  script().then(callback, callback);
+};
