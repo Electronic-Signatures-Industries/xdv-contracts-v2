@@ -79,7 +79,7 @@ contract XDVToken is
         require(
             minterDocumentRequests[dataProvider][requestId].status ==
                 uint256(DocumentMintingRequestStatus.REQUEST),
-            "XDV: Document with invalid status"
+            "XDV: Invalid Status"
         );
         _tokenIds.increment();
 
@@ -148,7 +148,7 @@ contract XDVToken is
                 address(this),
                 serviceFeeForContract
             ),
-            "XDV: Transfer failed for recipient"
+            "XDV: Transfer failed"
         );
         require(
             stablecoin.transferFrom(
@@ -156,7 +156,7 @@ contract XDVToken is
                 paymentAddress,
                 serviceFeeForPaymentAddress
             ),
-            "XDV: Transfer failed for recipient"
+            "XDV: Transfer failed"
         );
 
         emit ServiceFeePaid(

@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
+    "lint": "npx solhint contracts/contracts/**",
     "ganache": "ganache-cli -i 10",
     "postinstall": "typechain --target=web3-v1 contracts/build/contracts/XDVToken.json --outDir=server/types/typechain",
     "demo": "npm run truffle exec scripts/demo.js --workspace=contracts"
