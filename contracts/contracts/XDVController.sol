@@ -16,7 +16,6 @@ abstract contract XDVController is IERC1271, Ownable {
         string toMinterDid;
         string documentURI;
         uint256 status;
-        uint256 timestamp;
         string description;
     }
 
@@ -26,7 +25,6 @@ abstract contract XDVController is IERC1271, Ownable {
         address paymentAddress;
         bool hasUserKyc;
         uint256 feeStructure;
-        uint256 created;
         address factoryAddress;
         bool enabled;
     }
@@ -60,8 +58,8 @@ abstract contract XDVController is IERC1271, Ownable {
 
     /**
      * @dev ERC-1271 Compatibility. This checks that the message signature was sent by the
-     * contract's owner.
-     * Inspired by this implementation: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/mocks/ERC1271WalletMock.sol
+     * contract's owner. Inspired by this implementation:
+     * https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/mocks/ERC1271WalletMock.sol
      * @return magicValue either 0x00000000 for false or 0x1626ba7e for true.
      * 0x1626ba7e == bytes4(keccak256("isValidSignature(bytes32,bytes)")
      */
@@ -96,8 +94,7 @@ abstract contract XDVController is IERC1271, Ownable {
             status: uint256(DocumentMintingRequestStatus.REQUEST),
             description: description,
             toMinterDid: minterDid,
-            toMinter: minterAddress,
-            timestamp: block.timestamp
+            toMinter: minterAddress
         });
         minterDocumentRequestCounter[minterAddress]++;
 
@@ -121,7 +118,6 @@ abstract contract XDVController is IERC1271, Ownable {
             paymentAddress: paymentAddress,
             hasUserKyc: userHasKyc,
             feeStructure: feeStructure,
-            created: block.timestamp,
             factoryAddress: address(this),
             enabled: true
         });
