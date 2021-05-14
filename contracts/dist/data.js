@@ -1,4 +1,4 @@
-// updated at: 2021-05-14T17:18:43.479Z
+// updated at: 2021-05-14T19:31:31.523Z
 
 /* eslint-disable */
 
@@ -464,11 +464,6 @@ module.exports = {
           {
             "internalType": "uint256",
             "name": "status",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
             "type": "uint256"
           },
           {
@@ -986,6 +981,6 @@ module.exports = {
     "addresses": {
       "10": "0x5C87bA6a1Ba1aB89345D4c15D732eE91c97ef38d"
     },
-    "byteCodeHash": "0x328050a4ceb3959e52356ff9800341c5598b309771491bb8f1bf5ac999cd2e0b"
+    "byteCodeHash": "0x6fdf6fc6b686d4bb3cfb9bc45efd8ea2b62741556f5adb44cce6e0eecd025a0c"
   }
 };
